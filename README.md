@@ -56,6 +56,50 @@ agent says hello. Say hello back. That's it — you're running.
 > instead. The `.env` way is better (the key stays out of the browser), but
 > both work for the workshop.
 
+## No Node? No problem
+
+Three other ways to run it, in order of least effort:
+
+**GitHub Codespaces — nothing installed at all.** Works from a locked-down
+laptop, a Chromebook, or a borrowed machine; you just need a (free) GitHub
+account. On the repo page: green **Code** button → **Codespaces** tab →
+**Create codespace**. When the editor opens in your browser (give it a
+minute), use its terminal for the `.env` command above, then `npm start`. A
+notification offers **Open in Browser** — that's your app, served over
+HTTPS, so the microphone works there too.
+
+**VS Code Dev Container** — if you have VS Code and Docker: open the folder,
+accept the "Reopen in Container" prompt, and it builds itself; then `.env`
+and `npm start` in the integrated terminal as normal.
+
+**Plain Docker** — no Node, but Docker installed:
+
+```bash
+docker build -t todo-voice-agent .
+docker run --rm -p 3000:3000 --env-file .env todo-voice-agent
+```
+
+Then open http://localhost:3000 as usual. (Create the `.env` file first —
+the command is in the section above.) One caveat for the Docker-only route:
+your code edits in Module 3 need a rebuild to show up (`Ctrl+C`, then re-run
+both commands), where the normal and Codespaces routes only need a browser
+refresh.
+
+## Using an AI coding assistant
+
+Bringing one is encouraged. This repo ships instructions ([AGENTS.md](AGENTS.md), picked up
+by Claude Code, Cursor, Copilot, and friends) that put your assistant in
+**tutor mode**: it will explain each step in plain language before doing it,
+and it will coach you through the two Module 3 functions rather than writing
+them for you — unless you explicitly tell it to.
+
+Prompts that work well here:
+
+- *"Set me up through hearing the greeting, and explain each step as you go."*
+- *"Explain what just happened in the event log."*
+- *"Walk me through the completeItem gap without giving me the answer."*
+- *"It says 'Connection closed: 4001' — what does that mean?"*
+
 ## Try saying
 
 - "What's on my list?"
