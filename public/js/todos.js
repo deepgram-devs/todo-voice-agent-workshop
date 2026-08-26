@@ -62,26 +62,41 @@ function listItems() {
 }
 
 function completeItem({ item }) {
-  const todo = findTodo(item);
-  if (!todo) {
-    return `I couldn't find anything matching "${item}" on the list.`;
-  }
-  if (todo.done) {
-    return `"${todo.text}" was already done. Double-checking counts as productivity.`;
-  }
-  todo.done = true;
-  notifyChange();
-  return `Marked "${todo.text}" as done. Nice.`;
+  // ============================================================
+  // MODULE 3 — GAP 1 of 2. Your turn!
+  //
+  // Mark a to-do as done. The steps:
+  //   1. Find the to-do:  const todo = findTodo(item);
+  //   2. If nothing matched (todo is undefined), return a
+  //      sentence saying you couldn't find it.
+  //   3. Set the to-do's `done` property to true.
+  //   4. Call notifyChange() so the on-screen list updates.
+  //   5. Return a short sentence confirming what you did —
+  //      the agent will SPEAK whatever string you return.
+  //
+  // Stuck? The guide walks through it line by line, and the
+  // finished version lives on the `complete` branch.
+  // ============================================================
+
+  return "The completeItem function isn't built yet. That's the workshop's Module 3 — go build me!";
 }
 
 function deleteItem({ item }) {
-  const index = todos.findIndex((t) => t === findTodo(item));
-  if (index === -1) {
-    return `I couldn't find anything matching "${item}" to delete.`;
-  }
-  const [removed] = todos.splice(index, 1);
-  notifyChange();
-  return `Deleted "${removed.text}". It's like it never existed.`;
+  // ============================================================
+  // MODULE 3 — GAP 2 of 2.
+  //
+  // Remove a to-do from the list entirely. The steps:
+  //   1. Find its position:
+  //        const index = todos.findIndex((t) => t === findTodo(item));
+  //   2. If index is -1, return a sentence saying you couldn't
+  //      find it.
+  //   3. Remove it:  const [removed] = todos.splice(index, 1);
+  //   4. Call notifyChange() so the on-screen list updates.
+  //   5. Return a short confirmation sentence — the agent
+  //      speaks your return value.
+  // ============================================================
+
+  return "The deleteItem function isn't built yet. It's the second gap in Module 3!";
 }
 
 // --- Dispatch map: function name → handler ---
