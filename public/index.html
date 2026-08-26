@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Teach Your To-Do List to Listen</title>
+  <meta name="description" content="A to-do list you can talk to, built on the Deepgram Voice Agent API." />
+  <meta name="theme-color" content="#13ef93" />
+  <link rel="stylesheet" href="/css/theme.css" />
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <h1>Teach Your To-Do List to Listen</h1>
+    <span id="statusPill" class="status-pill" data-state="disconnected" role="status">Disconnected</span>
+  </header>
+
+  <section class="connect-row" aria-label="Connection">
+    <label class="sr-only" for="apiKeyInput">Deepgram API key</label>
+    <input
+      id="apiKeyInput"
+      type="password"
+      placeholder="Deepgram API key (skip if it's in .env)"
+      autocomplete="off"
+    />
+    <button id="primaryBtn" class="primary-btn" data-mode="disconnected">Connect</button>
+    <button id="endBtn" class="end-btn" hidden>End</button>
+  </section>
+
+  <main class="layout">
+    <section class="panel" aria-label="Your to-do list">
+      <div class="panel-head">
+        <h2>The list</h2>
+        <span id="todoCount" class="muted">0 of 0 done</span>
+      </div>
+      <ul id="todoList" class="todo-list" aria-live="polite"></ul>
+    </section>
+
+    <section class="panel" aria-label="Conversation">
+      <div class="panel-head">
+        <h2>Conversation</h2>
+      </div>
+      <div id="conversation" class="conversation" aria-live="polite"></div>
+
+      <form id="typedForm" class="typed-row">
+        <label class="sr-only" for="typedInput">Type to the agent instead of speaking</label>
+        <input
+          id="typedInput"
+          type="text"
+          placeholder="No mic? Loud room? Type it instead…"
+          autocomplete="off"
+        />
+        <button type="submit">Send</button>
+      </form>
+    </section>
+  </main>
+
+  <details class="stretch">
+    <summary>Stretch: give it a personality</summary>
+    <p class="muted">
+      One click swaps the agent's prompt, voice, and delivery — live, mid-conversation.
+      The agent remembers everything you've said so far. (This is Module 5 of the workshop.)
+    </p>
+    <div class="persona-row" role="group" aria-label="Personalities">
+      <button class="persona-btn active" data-persona="classic" aria-pressed="true">Classic</button>
+      <button class="persona-btn" data-persona="sergeant" aria-pressed="false">Drill Sergeant</button>
+      <button class="persona-btn" data-persona="passive" aria-pressed="false">Passive-Aggressive</button>
+      <button class="persona-btn" data-persona="pirate" aria-pressed="false">Pirate</button>
+    </div>
+  </details>
+
+  <details class="stretch" open>
+    <summary>Event log — what's actually happening</summary>
+    <div id="eventLog" class="event-log" aria-live="off"></div>
+  </details>
+
+  <footer class="foot muted">
+    Built on the <a href="https://developers.deepgram.com/docs/voice-agent">Deepgram Voice Agent API</a>.
+    Runs locally — your API key never leaves your machine.
+  </footer>
+
+  <script type="module" src="/js/app.js"></script>
+</body>
+</html>

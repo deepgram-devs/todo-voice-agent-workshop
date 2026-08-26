@@ -1,0 +1,76 @@
+/*
+ * Deepgram brand tokens — the ONLY file that knows about brand colors
+ * and fonts. Sourced from the Deepgram Brand Guidelines (Notion: Brand
+ * Guidelines > Color Palette), matching the token names used in
+ * deepgram-devs/workshops. When the brand changes, change this file
+ * and nothing else.
+ */
+
+:root {
+  --font-heading: 'Roobert Pro', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+
+  /* Primary */
+  --dg-spring-green: #13ef93;
+  --dg-spring-green-light: #a1f9d4;
+  --dg-spring-green-dark: #075433;
+
+  /* Secondary */
+  --dg-blue: #149afb;
+  --dg-blue-light: #a1d7fd;
+
+  /* Accents */
+  --dg-pink: #ee028c;
+  --dg-purple: #ae63f9;
+  --dg-red: #f04438;
+  --dg-yellow: #fec84b;
+  --dg-green: #12b76a;
+
+  /* Grays */
+  --dg-gray-25: #fbfbff;
+  --dg-gray-50: #ededf2;
+  --dg-gray-100: #e1e1e5;
+  --dg-gray-300: #bbbbbf;
+  --dg-gray-500: #949498;
+  --dg-gray-600: #4e4e52;
+  --dg-gray-700: #2c2c33;
+  --dg-gray-800: #232329;
+  --dg-gray-850: #1a1a1f;
+  --dg-gray-900: #101014;
+  --dg-gray-950: #0b0b0c;
+
+  /* Semantic tokens (light) */
+  --accent: var(--dg-spring-green);
+  --accent-contrast: var(--dg-spring-green-dark);
+  /* Spring green fails WCAG AA as text on light backgrounds — use this
+     token wherever the accent is text rather than a fill or border. */
+  --accent-text: var(--dg-spring-green-dark);
+  --background: var(--dg-gray-25);
+  --surface: #ffffff;
+  --surface-2: var(--dg-gray-50);
+  --foreground: var(--dg-gray-850);
+  --muted-text: var(--dg-gray-600);
+  --border: var(--dg-gray-100);
+  --link: var(--dg-blue);
+  --danger: var(--dg-red);
+  --warning: var(--dg-yellow);
+  --success: var(--dg-green);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --accent-text: var(--dg-spring-green-light);
+    --background: var(--dg-gray-900);
+    --surface: var(--dg-gray-850);
+    --surface-2: var(--dg-gray-800);
+    --foreground: var(--dg-gray-25);
+    --muted-text: var(--dg-gray-300);
+    --border: var(--dg-gray-700);
+    --link: var(--dg-blue-light);
+  }
+}
+
+html {
+  color-scheme: light dark;
+}

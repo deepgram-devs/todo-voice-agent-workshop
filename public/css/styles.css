@@ -1,0 +1,343 @@
+/*
+ * Layout and components. Uses only the tokens defined in theme.css —
+ * no raw colors or font names in this file.
+ */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0 auto;
+  max-width: 60rem;
+  padding: 1rem 1.25rem 2rem;
+  font-family: var(--font-body);
+  font-weight: 300;
+  background: var(--background);
+  color: var(--foreground);
+  line-height: 1.5;
+}
+
+h1, h2 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  margin: 0;
+}
+
+a {
+  color: var(--link);
+}
+
+.muted {
+  color: var(--muted-text);
+  font-size: 0.875rem;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+:focus-visible {
+  outline: 2px solid var(--link);
+  outline-offset: 2px;
+}
+
+/* --- Top bar --- */
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding: 0.5rem 0 1rem;
+}
+
+.topbar h1 {
+  font-size: 1.35rem;
+}
+
+.status-pill {
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--muted-text);
+}
+
+.status-pill[data-state='connected'] {
+  border-color: var(--accent);
+  color: var(--accent-text);
+}
+
+.status-pill[data-state='error'] {
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+/* --- Connect row --- */
+
+.connect-row {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.connect-row input {
+  flex: 1 1 14rem;
+}
+
+input {
+  font: inherit;
+  padding: 0.55rem 0.75rem;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--foreground);
+}
+
+button {
+  font: inherit;
+  font-weight: 500;
+  padding: 0.55rem 1rem;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--foreground);
+  cursor: pointer;
+}
+
+button:hover:not(:disabled) {
+  border-color: var(--accent);
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.primary-btn {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-contrast);
+  font-weight: 700;
+}
+
+.primary-btn[data-mode='listening'] {
+  background: var(--accent);
+}
+
+.primary-btn[data-mode='muted'] {
+  background: var(--warning);
+  border-color: var(--warning);
+  color: var(--dg-gray-850);
+}
+
+.end-btn {
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+/* --- Main layout --- */
+
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: 1rem;
+}
+
+@media (max-width: 44rem) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  min-height: 20rem;
+}
+
+.panel-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.panel-head h2 {
+  font-size: 1rem;
+}
+
+/* --- To-do list --- */
+
+.todo-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+}
+
+.todo {
+  display: flex;
+  gap: 0.6rem;
+  align-items: baseline;
+  padding: 0.45rem 0.25rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.todo-mark {
+  flex: 0 0 1.2rem;
+  height: 1.2rem;
+  border: 1.5px solid var(--dg-gray-500);
+  border-radius: 4px;
+  font-size: 0.85rem;
+  line-height: 1.2rem;
+  text-align: center;
+  align-self: center;
+}
+
+.todo.done .todo-mark {
+  background: var(--success);
+  border-color: var(--success);
+  color: var(--dg-gray-25);
+}
+
+.todo.done .todo-text {
+  text-decoration: line-through;
+  color: var(--muted-text);
+}
+
+/* --- Conversation --- */
+
+.conversation {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding-bottom: 0.5rem;
+  min-height: 10rem;
+  max-height: 24rem;
+}
+
+.bubble {
+  max-width: 85%;
+  padding: 0.5rem 0.75rem;
+  border-radius: 10px;
+  background: var(--surface-2);
+}
+
+.bubble.user {
+  align-self: flex-end;
+  border: 1px solid var(--accent);
+}
+
+.bubble.agent {
+  align-self: flex-start;
+  border: 1px solid var(--border);
+}
+
+.bubble-who {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--muted-text);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.bubble p {
+  margin: 0.15rem 0 0;
+}
+
+.typed-row {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.typed-row input {
+  flex: 1;
+}
+
+/* --- Stretch sections --- */
+
+.stretch {
+  margin-top: 1rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+}
+
+.stretch summary {
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.persona-row {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: 0.75rem;
+}
+
+.persona-btn.active {
+  border-color: var(--accent);
+  color: var(--accent-text);
+  font-weight: 700;
+}
+
+/* --- Event log --- */
+
+.event-log {
+  margin-top: 0.75rem;
+  max-height: 14rem;
+  overflow-y: auto;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  background: var(--surface-2);
+  border-radius: 8px;
+  padding: 0.6rem;
+}
+
+.event {
+  padding: 0.1rem 0;
+  color: var(--muted-text);
+}
+
+.event-user,
+.event-agent {
+  color: var(--foreground);
+}
+
+.event-function {
+  color: var(--accent-text);
+}
+
+.event-error {
+  color: var(--danger);
+}
+
+/* --- Footer --- */
+
+.foot {
+  margin-top: 1.5rem;
+  text-align: center;
+}
