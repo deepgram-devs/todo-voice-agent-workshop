@@ -49,7 +49,7 @@ Files, in the order they matter:
   **The only file the workshop edits.**
 - `public/js/agent.js` — WebSocket lifecycle, the `Settings` message, event
   handling, function dispatch, typed input (`InjectUserMessage`), and the
-  persona presets (`UpdatePrompt` + `UpdateSpeak` with Flux `expressivity`).
+  persona presets (`UpdatePrompt` + `UpdateSpeak` with Flux TTS `expressivity`).
 - `public/js/audio.js` — mic capture (16kHz PCM in) and playback (24kHz PCM
   out); `stopPlayback()` is what makes barge-in actually go quiet.
 - `public/js/ui.js`, `public/js/app.js` — rendering and wiring.
@@ -64,7 +64,7 @@ Files, in the order they matter:
 3. Teach it two tricks — implement `completeItem`, then `deleteItem`
 4. Interrupt it — barge-in (`UserStartedSpeaking` → stop playback)
 5. Personality — persona buttons; three knobs: prompt, voice, expressivity
-6. Tune the voice — Flux voice catalog, `speed`, `expressivity`,
+6. Tune the voice — Flux TTS voice catalog, `speed`, `expressivity`,
    `eot_threshold` / `eot_timeout_ms`
 7. Swap the brain — `think.provider` alternatives, latency comparison
 8. Make it yours — author a new function (definition + dispatch + handler)
