@@ -31,15 +31,30 @@ function notifyChange() {
   if (onChange) onChange(todos);
 }
 
+// Words that appear in almost every item and mean nothing on their own.
+// Without this list, "the staple gun one" matches "Water THE cactus" first.
+const FILLER_WORDS = new Set(['the', 'one', 'and', 'that', 'this', 'item', 'task', 'thing', 'from', 'with']);
+
 // Find a to-do whose text loosely matches what the agent heard.
 // "the cactus one" should match "Water the cactus — it has been eight months".
 function findTodo(itemText) {
-  const lower = itemText.toLowerCase();
-  const words = lower.split(/\s+/).filter((w) => w.length > 2);
-  return (
-    todos.find((t) => t.text.toLowerCase().includes(lower)) ||
-    todos.find((t) => words.some((w) => t.text.toLowerCase().includes(w)))
-  );
+  const lower = itemText.toLowerCase().trim();
+  const exact = todos.find((t) => t.text.toLowerCase().includes(lower));
+  if (exact) return exact;
+
+  // Otherwise: the item sharing the most meaningful words with what was said.
+  const words = lower.split(/\W+/).filter((w) => w.length > 2 && !FILLER_WORDS.has(w));
+  let best = null;
+  let bestScore = 0;
+  for (const t of todos) {
+    const text = t.text.toLowerCase();
+    const score = words.filter((w) => text.includes(w)).length;
+    if (score > bestScore) {
+      best = t;
+      bestScore = score;
+    }
+  }
+  return best;
 }
 
 // --- The four functions the agent can call ---
