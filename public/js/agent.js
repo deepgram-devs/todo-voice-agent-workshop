@@ -212,23 +212,46 @@ function handleMessage(msg) {
 // FunctionCallRequest. We run the matching handler from todos.js and send
 // the result back as a FunctionCallResponse. Until that response arrives,
 // the agent has nothing to say — that silence is called "dead air".
-function handleFunctionCalls(msg) {
+// CHALLENGE "Cover the dead air": this function is now `async`, and it
+// AWAITS the handler. Without the await, a slow (async) handler returns a
+// Promise, `typeof result === 'string'` is false, and the agent is sent
+// "{}" — which it then tries to say out loud. With it, the agent waits for
+// the real answer — and while it waits, we give it something to say.
+async function handleFunctionCalls(msg) {
   const functions = msg.functions || [];
 
   for (const fn of functions) {
     const handler = FUNCTION_HANDLERS[fn.name];
     debug('function', `Agent is calling ${fn.name}(${fn.arguments || ''})`);
 
+    // If the handler hasn't answered within 400ms, have the agent fill the
+    // silence. `behavior: 'queue'` says "after whatever you're saying, not
+    // instead of it" — and unlike the default behavior it isn't refused
+    // mid-turn. Fast handlers (all of ours, normally) cancel it in time.
+    const filler = setTimeout(() => {
+      if (ws && ws.readyState === WebSocket.OPEN) {
+        debug('system', 'Function is slow — injecting filler speech');
+        ws.send(JSON.stringify({
+          type: 'InjectAgentMessage',
+          behavior: 'queue',
+          message: 'One second, let me find that.',
+        }));
+      }
+    }, 400);
+
     let result;
     if (handler) {
       try {
         const args = fn.arguments ? JSON.parse(fn.arguments) : {};
-        result = handler(args);
+        result = await handler(args);
       } catch (err) {
         result = `Error executing ${fn.name}: ${err.message}`;
         debug('error', result);
+      } finally {
+        clearTimeout(filler);
       }
     } else {
+      clearTimeout(filler);
       result = `Unknown function: ${fn.name}`;
       debug('error', result);
     }
@@ -260,7 +283,8 @@ Rules:
 - When the user wants to add a task, call addItem. Rephrase their words into a short task if needed.
 - When they ask what's on the list or what's left, call listItems.
 - When they say they finished something, call completeItem.
-- When they want something gone, call deleteItem.
+- Deleting is permanent. When the user asks to delete something, do NOT call deleteItem yet. Ask them to confirm, naming the item. Call deleteItem only after they have clearly said yes. If they say no, never mind, or change the subject, leave the list alone and say so.
+- When the user says undo or wants something back, call undoDelete.
 - Always confirm what you did, briefly.
 - Be warm and a little dry. You may be gently unimpressed by how long items have been on the list, but never mean, and never guilt-trip.
 - Keep responses to one or two short sentences — this is a spoken conversation.
