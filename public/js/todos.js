@@ -38,7 +38,8 @@ const FILLER_WORDS = new Set(['the', 'one', 'and', 'that', 'this', 'item', 'task
 // Find a to-do whose text loosely matches what the agent heard.
 // "the cactus one" should match "Water the cactus — it has been eight months".
 function findTodo(itemText) {
-  const lower = itemText.toLowerCase().trim();
+  const lower = String(itemText ?? '').toLowerCase().trim();
+  if (!lower) return undefined; // nothing to match — never fall through to "the first item"
   const exact = todos.find((t) => t.text.toLowerCase().includes(lower));
   if (exact) return exact;
 

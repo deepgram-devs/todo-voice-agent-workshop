@@ -67,8 +67,9 @@ Files, in the order they matter:
 
 0. Overview — concepts, hear an agent in the browser playground
 1. Run it — clone, `npm install`, `.env`, `npm start`, hear the greeting
-2. Watch it think — read the event log (`FunctionCallRequest` → handler →
-   `FunctionCallResponse`), tour `sendSettings`
+2. Watch it think — read the event log (`EndOfTurn`, `FunctionCallRequest` →
+   handler → `FunctionCallResponse`, the `LatencyReport` that carries
+   `total_latency`), tour `sendSettings`
 3. Teach it two tricks — implement `completeItem`, then `deleteItem`
 4. Interrupt it — barge-in (`UserStartedSpeaking` → stop playback)
 5. Personality — persona buttons; three knobs: prompt, voice, expressivity
