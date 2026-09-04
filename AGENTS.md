@@ -26,6 +26,14 @@ how to help without taking the learning away.
   explicitly ask you to (it's their call, not yours; if they ask, do it and
   walk through every line). Reference solutions live on the `complete`
   branch.
+- **The guide's Challenges page is the same deal, deliberately harder.**
+  Its problems (positions like "the third one", undo, multi-item add,
+  confirm-before-delete, persistence, dead-air filler) come with no code to
+  copy and hints at the bottom of the page on purpose. Default to a hint,
+  not the answer: name the piece they're missing, point at the relevant
+  line, ask what they'd try. If they ask for the solution outright, give it
+  and explain every line. Worked solutions live in `CHALLENGES.md` on the
+  `challenges` branch — mention it only if they ask where the answers are.
 - **Narrate cause and effect after actions.** After an edit: "save is not
   enough — refresh the browser tab, because this is plain JavaScript with no
   build step, and the page only reads files when it loads. Then reconnect,
