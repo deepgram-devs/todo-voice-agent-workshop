@@ -130,7 +130,7 @@ server.js (Express — keeps your API key out of the browser)
       │
       ▼
 Deepgram Voice Agent API (wss://agent.deepgram.com/v1/agent/converse)
-   Listen: Flux (flux-general-en)  ·  Think: gpt-4o-mini  ·  Speak: Flux TTS (flux-hannah-en)
+   Listen: Flux STT (flux-general-en)  ·  Think: gpt-4o-mini  ·  Speak: Flux TTS (flux-hannah-en)
 ```
 
 The agent can't touch your list directly. It asks to call one of the
@@ -159,7 +159,7 @@ server.js          ← local server + WebSocket proxy (no edits needed)
 | Browser never asks about the microphone | Permission was denied earlier | Click the icon by the address bar → allow microphone → refresh. Or just use the typed input box. |
 | Agent connects but never hears you | Wrong input device | System sound settings → set your headset as the input device → refresh. |
 | "Connection closed: 4001" | No API key found | Create the `.env` file (see above) and restart `npm start`, or paste the key into the app. |
-| Connects then immediately closes | Key invalid or out of credit | Check the key at [console.deepgram.com](https://console.deepgram.com/) and paste it freshly — no quotes, no spaces. |
+| Connects then immediately closes ("Connection closed: 4002") | Key invalid or out of credit | Check the key at [console.deepgram.com](https://console.deepgram.com/) and paste it freshly — no quotes, no spaces. |
 | Robotic noise or echo | Agent hearing itself through your speakers | Wear headphones, or mute while it talks. |
 | `EADDRINUSE` / port 3000 busy | Another app has the port | `PORT=3001 npm start`, then open http://localhost:3001. |
 | Everything hangs on "Connecting…" | Network blocks WebSockets | Try another network (phone hotspot works). Conference wifi is a known enemy. |

@@ -2,6 +2,7 @@
   "name": "todo-voice-agent",
   "version": "1.0.0",
   "description": "Teach your to-do list to listen — a beginner workshop for the Deepgram Voice Agent API",
+  "type": "module",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",

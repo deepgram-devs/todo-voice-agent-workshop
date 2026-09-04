@@ -55,15 +55,17 @@ export function connect(apiKey) {
   const params = apiKey ? `?apiKey=${encodeURIComponent(apiKey)}` : '';
   const url = `${protocol}//${window.location.host}/agent${params}`;
 
-  ws = new WebSocket(url);
-  ws.binaryType = 'arraybuffer';
+  const socket = new WebSocket(url);
+  socket.binaryType = 'arraybuffer';
+  ws = socket;
 
-  ws.onopen = () => {
+  socket.onopen = () => {
     debug('system', 'WebSocket connected, waiting for Welcome...');
     startKeepAlive();
   };
 
-  ws.onmessage = (event) => {
+  socket.onmessage = (event) => {
+    if (socket !== ws) return; // a connection we've already moved on from
     if (event.data instanceof ArrayBuffer) {
       // Binary frames are the agent's voice: raw audio to play
       if (onAudioReceived) onAudioReceived(event.data);
@@ -82,13 +84,15 @@ export function connect(apiKey) {
     handleMessage(msg);
   };
 
-  ws.onclose = (event) => {
+  socket.onclose = (event) => {
+    if (socket !== ws) return; // closed by us, or superseded by a newer connection
     debug('system', `Connection closed: ${event.code} ${event.reason}`);
     cleanup();
     setState(States.DISCONNECTED);
   };
 
-  ws.onerror = () => {
+  socket.onerror = () => {
+    if (socket !== ws) return;
     debug('error', 'WebSocket error');
     cleanup();
     setState(States.ERROR);
@@ -124,7 +128,8 @@ export function sendTextMessage(text) {
         content: text,
       })
     );
-    debug('user', `(typed) ${text}`);
+    // No log line here on purpose: the agent echoes your text back as a
+    // ConversationText event, and that is what lands in the event log.
   }
 }
 
@@ -144,12 +149,20 @@ function handleMessage(msg) {
       break;
 
     case 'ConversationText':
+      // The transcript, both directions. It goes to the chat bubbles AND the
+      // event log, so the log reads as one story.
+      debug(msg.role === 'user' ? 'user' : 'agent', msg.content);
       if (onConversationText) onConversationText(msg.role, msg.content);
+      break;
+
+    case 'EndOfTurn':
+      // Flux STT decided you were finished. The LLM's turn starts now.
+      debug('system', 'End of turn — Flux STT decided you were finished');
       break;
 
     case 'UserStartedSpeaking':
       // Barge-in: you started talking, so the agent must stop.
-      debug('system', 'You started speaking — stopping agent audio (barge-in)');
+      debug('system', 'You started speaking — any agent audio stops here (barge-in)');
       if (onAudioReceived) onAudioReceived(null); // null = stop playback
       break;
 
@@ -162,6 +175,15 @@ function handleMessage(msg) {
         debug('system', `Agent speaking (latency: ${msg.total_latency.toFixed(2)}s)`);
       } else {
         debug('system', 'Agent speaking');
+      }
+      break;
+
+    case 'LatencyReport':
+      // Several arrive per turn, one per stage. The one carrying
+      // total_latency is the number to watch: from the end of your turn to
+      // the agent's first sound.
+      if (msg.total_latency !== undefined) {
+        debug('system', `Agent speaking (latency: ${msg.total_latency.toFixed(2)}s)`);
       }
       break;
 
@@ -198,7 +220,6 @@ function handleMessage(msg) {
       break;
 
     case 'History':
-    case 'LatencyReport':
     case 'FunctionCallResponse':
       // Bookkeeping echoes from the API — safe to ignore
       break;

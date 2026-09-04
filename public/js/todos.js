@@ -84,7 +84,8 @@ function findTodo(itemText) {
   const position = positionFrom(itemText);
   if (position && todos[position - 1]) return todos[position - 1];
 
-  const lower = itemText.toLowerCase().trim();
+  const lower = String(itemText ?? '').toLowerCase().trim();
+  if (!lower) return undefined; // nothing to match — never fall through to "the first item"
   const exact = todos.find((t) => t.text.toLowerCase().includes(lower));
   if (exact) return exact;
 
