@@ -81,9 +81,6 @@ function completeItem({ item }) {
   if (!todo) {
     return `I couldn't find anything matching "${item}" on the list.`;
   }
-  if (todo.done) {
-    return `"${todo.text}" was already done. Double-checking counts as productivity.`;
-  }
   todo.done = true;
   notifyChange();
   return `Marked "${todo.text}" as done. Nice.`;
