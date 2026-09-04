@@ -1,7 +1,7 @@
 # Challenges — worked solutions
 
 This branch solves every challenge on the workshop guide's
-[Challenges page](https://workshops.deepgram.com/workshops/voice-agent-js).
+[Challenges page](https://workshops.deepgram.com/voice-agent-js/challenges).
 You're meant to arrive here *after* a genuine attempt — the page keeps its
 hints at the bottom and this branch one step further away, on purpose. If
 you've had your go, welcome. Each section below says what changed, where,

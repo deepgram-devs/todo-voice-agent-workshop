@@ -90,8 +90,9 @@ refresh.
 Bringing one is encouraged. This repo ships instructions ([AGENTS.md](AGENTS.md), picked up
 by Claude Code, Cursor, Copilot, and friends) that put your assistant in
 **tutor mode**: it will explain each step in plain language before doing it,
-and it will coach you through the two Module 3 functions rather than writing
-them for you — unless you explicitly tell it to.
+and it will coach you through the two Module 3 functions — and the guide's
+Challenges page — rather than writing them for you, unless you explicitly
+tell it to.
 
 Prompts that work well here:
 
@@ -132,14 +133,14 @@ Deepgram Voice Agent API (wss://agent.deepgram.com/v1/agent/converse)
    Listen: Flux (flux-general-en)  ·  Think: gpt-4o-mini  ·  Speak: Flux TTS (flux-hannah-en)
 ```
 
-The agent can't touch your list directly. It asks to call one of the four
+The agent can't touch your list directly. It asks to call one of the
 functions defined in [`public/js/todos.js`](public/js/todos.js); the code runs
 in **your** browser, and the agent speaks whatever your function returns.
 
 ```
 public/
 ├── js/
-│   ├── todos.js   ← the list + the four functions. THE FILE YOU EDIT.
+│   ├── todos.js   ← the list + the functions. THE FILE YOU EDIT.
 │   ├── agent.js   ← WebSocket, Settings, events, personalities
 │   ├── audio.js   ← mic capture and voice playback
 │   ├── ui.js      ← rendering
