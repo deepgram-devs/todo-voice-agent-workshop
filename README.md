@@ -90,8 +90,9 @@ refresh.
 Bringing one is encouraged. This repo ships instructions ([AGENTS.md](AGENTS.md), picked up
 by Claude Code, Cursor, Copilot, and friends) that put your assistant in
 **tutor mode**: it will explain each step in plain language before doing it,
-and it will coach you through the two Module 3 functions rather than writing
-them for you — unless you explicitly tell it to.
+and it will coach you through the two Module 3 functions — and the guide's
+Challenges page — rather than writing them for you, unless you explicitly
+tell it to.
 
 Prompts that work well here:
 
