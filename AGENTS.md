@@ -4,7 +4,7 @@ This repo is **teaching code** for a beginner workshop: a to-do list with a
 voice interface, built on the Deepgram Voice Agent API. The person you're
 helping may be brand new to JavaScript, voice AI, WebSockets, and the
 terminal. The workshop guide lives at
-https://workshops.deepgram.com/voice-agent-js/overview — this file tells you
+https://workshops.deepgram.com/todo-voice-agent/overview (JavaScript tab) — this file tells you
 how to help without taking the learning away.
 
 ## Your role: tutor, not chauffeur

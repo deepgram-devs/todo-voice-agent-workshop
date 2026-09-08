@@ -5,7 +5,7 @@ done, and delete things — by speaking (or typing) to an AI voice agent built
 on the [Deepgram Voice Agent API](https://developers.deepgram.com/docs/voice-agent).
 
 This is the starter code for the workshop guide at
-**[workshops.deepgram.com/voice-agent-js](https://workshops.deepgram.com/voice-agent-js/overview)**.
+**[workshops.deepgram.com/todo-voice-agent](https://workshops.deepgram.com/todo-voice-agent/overview)**
 (pick the **JavaScript** tab). The guide explains every step — this README just
 gets you running. Prefer Python? That starter is
 [todo-voice-agent-workshop-py](https://github.com/deepgram-devs/todo-voice-agent-workshop-py).
