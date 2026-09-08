@@ -6,7 +6,9 @@ on the [Deepgram Voice Agent API](https://developers.deepgram.com/docs/voice-age
 
 This is the starter code for the workshop guide at
 **[workshops.deepgram.com/voice-agent-js](https://workshops.deepgram.com/voice-agent-js/overview)**.
-The guide explains every step — this README just gets you running.
+(pick the **JavaScript** tab). The guide explains every step — this README just
+gets you running. Prefer Python? That starter is
+[todo-voice-agent-workshop-py](https://github.com/deepgram-devs/todo-voice-agent-workshop-py).
 
 ## What you need
 
